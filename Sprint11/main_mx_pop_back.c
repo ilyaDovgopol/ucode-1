@@ -23,7 +23,25 @@ int main(void) {
     int data2 = 1;
     mx_push_front(&head, &data2);
     print_list(head);
+
+    int data3 = 2;
+    mx_push_front(&head, &data3);
+    print_list(head);
+
+    mx_pop_back(&head);
+    print_list(head);
+
+    mx_pop_back(&head);
+    print_list(head);
+
+    mx_pop_back(&head);
+    print_list(head);
+
+    mx_pop_back(&head);
+    print_list(head);
+
+    mx_pop_back(&head);
+    print_list(head);
     return 0;
 }
-
 

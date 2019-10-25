@@ -2,12 +2,6 @@
 // Created by Oleg on 2019-10-24.
 //
 
-//
-// Created by Oleg on 2019-10-24.
-//
-//
-// Created by Oleg on 2019-10-24.
-//
 #include <stdio.h>
 #include "libmx.h"
 

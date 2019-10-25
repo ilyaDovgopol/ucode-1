@@ -27,7 +27,7 @@ int mx_quick_sort(char **arr, int left, int right) {
     arr[pivot] = t;
     mx_quick_sort(arr, left, j - 1);
     mx_quick_sort(arr, j + 1, right);
-    return WHAT????
+    return 0;
 }
 
 int compare(char *s1, char *s2) {

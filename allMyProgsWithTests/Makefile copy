@@ -1,0 +1,31 @@
+SRC = src/*.c
+INC = inc/*.h
+
+all:
+    get_src get_inc make_lib install
+
+get_src: SRC
+    cp SRC .
+
+get_inc: INC
+    cp INC .
+
+make_lib: *.c
+    clang -std=c11 -Wall -Wextra -Werror -Wpedantic -c *.c
+    ar r minilib.a *.o
+
+install: *.a
+    clang -std=c11 -Wall -Wextra -Werror -Wpedantic -o main *.a
+
+uninstall: main
+    rm main
+
+clean: *.c *.h *.o
+    rm *.c
+    rm *.h
+    rm *.o
+
+reinstall:
+    uninstall clean all
+
+

@@ -9,5 +9,9 @@ char *mx_strcat(char *s1, const char *s2) {
             j++;
         }
     return s1;
+    /*solution from GNU C Library (glibc) https://github.com/bminor/glibc/blob/master/string/strcat.c
+    strcpy (s1 + strlen (s1), s2);
+    return s1;
+    */
 }
 

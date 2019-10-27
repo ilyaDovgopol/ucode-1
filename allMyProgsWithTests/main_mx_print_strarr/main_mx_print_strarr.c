@@ -1,5 +1,8 @@
 #include "libmx.h"
 
+
+void mx_print_strarr(char **arr, const char *delim);
+
 int main(void) {
     char *arr[] = {"Hello", "World", ",", "Oleg", "!", NULL};
     char *delim = "__";

@@ -1,13 +1,16 @@
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdbool.h>
+// #include <stddef.h>
+// #include <stdlib.h>
+// #include <stdbool.h>
 
-char *mx_strncpy(char *dst, const char *src, int len);
-char *mx_strnew(const int size);
-void mx_strdel(char **str);
-int mx_count_words(const char *str, char delimiter);
-bool is_next_word(int *start, int *end, char *s, char c);
-void delete_arr(char **p , int count_words);
+// char *mx_strncpy(char *dst, const char *src, int len);
+// char *mx_strnew(const int size);
+// void mx_strdel(char **str);
+// int mx_count_words(const char *str, char delimiter);
+
+#include "libmx.h"
+
+static bool is_next_word(int *start, int *end, char *s, char c);
+static void delete_arr(char **p , int count_words);
 
 char **mx_strsplit(char const *s, char c) {
     if (s == NULL)
@@ -34,7 +37,7 @@ char **mx_strsplit(char const *s, char c) {
     return p;
 }
 
-bool is_next_word(int *start, int *end, char *s, char c) {
+static bool is_next_word(int *start, int *end, char *s, char c) {
     *start = *end + 1;
 
     while (s[*start] == c && s[*start]) {
@@ -51,7 +54,7 @@ bool is_next_word(int *start, int *end, char *s, char c) {
     return true;
 }
 
-void delete_arr(char **p , int count_words) {
+static void delete_arr(char **p , int count_words) {
     if (p == NULL)
         return;
     for (int i = 0; i < count_words; i++) {

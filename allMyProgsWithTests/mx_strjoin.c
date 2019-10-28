@@ -1,11 +1,13 @@
-#include <stdlib.h>
-#include <stddef.h>
+// #include <stdlib.h>
+// #include <stddef.h>
 
-char *mx_strnew(const int size);
-int mx_strlen(const char *);
-char *mx_strcpy(char *dst, const char *src);
-char *mx_strcat(char *s1, const char *s2);
-char *mx_strdup(const char *str);
+// char *mx_strnew(const int size);
+// int mx_strlen(const char *);
+// char *mx_strcpy(char *dst, const char *src);
+// char *mx_strcat(char *s1, const char *s2);
+// char *mx_strdup(const char *str);
+
+#include "libmx.h"
 
 char *mx_strjoin(char const *s1, char const *s2) {
     if (s1 == NULL && s2 == NULL)

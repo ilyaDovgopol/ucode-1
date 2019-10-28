@@ -1,3 +1,4 @@
+// Oracle evaluated 61 points
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -29,7 +30,6 @@ char *mx_del_extra_whitespaces(const char *str) {
 
     if (new_s == NULL)
         return NULL;
-    fill_new_string(new_s, s);
     return new_s;    
 }
 

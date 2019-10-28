@@ -12,6 +12,9 @@ typedef struct s_list {
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 t_list *mx_create_node(void *data);
 void mx_push_front(t_list **list, void *data);
@@ -21,14 +24,16 @@ void mx_pop_back(t_list **head);
 int mx_list_size(t_list *list);
 t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 // Utils
-void mx_print_strarr(char **arr, const char *delim);
-void mx_printstr(const char *s);
 void mx_printchar(char c);
-char *mx_itoa(int number);
+void mx_print_unicode(wchar_t c);
+void mx_printstr(const char *s);
+void mx_print_strarr(char **arr, const char *delim);
+void mx_printint(int n);
 double mx_pow(double n, unsigned int pow);
 int mx_sqrt(int x);
 char *mx_nbr_to_hex(unsigned long nbr);
 unsigned long mx_hex_to_nbr(const char *hex);
+char *mx_itoa(int number);
 void mx_foreach(int *arr, int size, void (*f)(int));
 int mx_binary_search(char **arr, int size, const char *s, int *count);
 int mx_bubble_sort(char **arr, int size);
@@ -60,8 +65,13 @@ char *mx_del_extra_spaces(const char *str);
 char **mx_strsplit(char const *s, char c);
 char *mx_strjoin(char const *s1, char const *s2);
 char *mx_file_to_str(const char *file);
+//int mx_read_line(char **lineptr, int buf_size, int delim, const int fd);
+char *mx_replace_substr(const char *str, const char *sub, const char *replace);
 
-char *mx_replace_substr(const char *str, const char *sub, const char *replace);;
+//Memory pack
+void *mx_memset(void *b, int c, size_t len);
+void *mx_memcpy(void *restrict dst, const void *restrict src, size_t n);
+void *mx_memccpy(void *restrict dst, const void *restrict src, int c, size_t n);
 
 #endif //LIBMX_H
 

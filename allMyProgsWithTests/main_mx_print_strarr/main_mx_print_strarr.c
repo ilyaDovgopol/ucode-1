@@ -1,6 +1,4 @@
-#include "libmx.h"
-
-
+#include <stddef.h>
 void mx_print_strarr(char **arr, const char *delim);
 
 int main(void) {

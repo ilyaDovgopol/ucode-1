@@ -1,10 +1,19 @@
 #include <stdio.h>
+#include "../libmx.h"
 char *mx_replace_substr(const char *str, const char *sub, const char *replace);
 
 int main(void) {
-    printf("%s\n", mx_replace_substr("McDonalds", "alds", "uts"));
-    printf("%s\n", mx_replace_substr("Ururu turu", "ru", "ta"));
-    printf("%s\n", mx_replace_substr(" Ur ur u tu ru ", " ", "__"));
+    char *s = mx_replace_substr("McDonalds", "alds", "uts");
+    printf("%s\n", s);
+    free(s);
+
+    s = mx_replace_substr("Ururu turu", "ru", "ta");
+    printf("%s\n", s);
+    free(s);
+    s = mx_replace_substr(" Ur ur u tu ru ", " ", "__");
+    printf("%s\n", s);
+    free(s);
+    system("leaks -q a.out");
     return 0;
 }
 

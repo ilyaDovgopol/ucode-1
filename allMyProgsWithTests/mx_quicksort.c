@@ -11,7 +11,7 @@ static void prt_arr(char **arr, int n) {
     printf("}\n");
 }
 
-int mx_quick_sort(char **arr, int left, int right) {
+int mx_quicksort(char **arr, int left, int right) {
     if (arr == NULL || *arr == NULL || left > right) return -1;
     int shifts = 0;
     int pivot;

@@ -2,15 +2,6 @@
 
 static int compare(char *s1, char *s2);
 
-#include <stdio.h>
-static void prt_arr(char **arr, int n) {
-    printf("\narr={\'%s\'", arr[0]);
-    for (int i = 1; i < n; i++) {
-        printf(", \'%s\'", arr[i]);
-    }
-    printf("}\n");
-}
-
 int mx_quicksort(char **arr, int left, int right) {
     if (arr == NULL || *arr == NULL || left > right) return -1;
     int shifts = 0;

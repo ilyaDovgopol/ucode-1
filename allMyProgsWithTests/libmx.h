@@ -17,6 +17,7 @@ typedef unsigned char byte;
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <malloc/malloc.h>
 
 t_list *mx_create_node(void *data);
 void mx_push_front(t_list **list, void *data);

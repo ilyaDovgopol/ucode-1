@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-char *mx_strcat(char *s1, const char *s2);
+char *mx_strcat(char *restrict s1, const char *restrict s2);
 
 int main(void) {
     char s[20];

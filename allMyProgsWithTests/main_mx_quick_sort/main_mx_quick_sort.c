@@ -1,5 +1,5 @@
 #include <stdio.h>
-int mx_quick_sort(char **arr, int left, int right);
+int mx_quicksort(char **arr, int left, int right);
 
 static void prt_arr(char **arr, int n) {
     printf("\narr={\'%s\'", arr[0]);
@@ -12,11 +12,13 @@ static void prt_arr(char **arr, int n) {
 int main(void) {
     printf("\nTest quick sort\n");
     //char *arr[] = {"xyz", "abc", "ghi", "def"};
-    char *arr[] = {"xxxx", "x",  "xxx", "xx"};
-    int n = 4;
+    char *arr[] = { "123456", "12", "12345", "1234567", "1234", "123", "1"};
+    //char *arr[] = {"Michelangelo", "Donatello", "Leonardo", "Raphael"};
+  
+    int n = 7;
     prt_arr(arr, n);
-    int d = mx_quick_sort(arr, 0, n - 1);
-    //printf("%d\n", d);
+    int d = mx_quicksort(arr, 0, n-1);
+    printf("result: %d\n", d);
     prt_arr(arr, n);
     return 0;
 }

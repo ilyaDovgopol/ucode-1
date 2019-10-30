@@ -17,6 +17,7 @@ int main(void) {
         free(s);
         close(fd);
     }
+    system("leaks -q a.out");
     return 0;
 }
 

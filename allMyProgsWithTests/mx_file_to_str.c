@@ -14,6 +14,7 @@ char *mx_file_to_str(const char *file) {
         new_s = mx_strjoin(new_s, buf);
         free(old_s);
     }
+    close(fd);
     return new_s;
 }
 

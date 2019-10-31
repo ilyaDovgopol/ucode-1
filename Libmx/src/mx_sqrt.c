@@ -1,6 +1,4 @@
-static int compare(int current, int x) {
-    return current * current - x;
-}
+static int compare(int current, int x);
 
 int mx_sqrt(int x) {
     if (x == 0 || x == 1)  
@@ -20,4 +18,7 @@ int mx_sqrt(int x) {
     return 0;
 }
 
+static int compare(int current, int x) {
+    return current * current - x;
+}
 

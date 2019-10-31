@@ -1,8 +1,6 @@
 #include "libmx.h"
 
-static int my_min(int a, int b) {
-    return a < b ? a : b;
-}
+static int my_min(int a, int b);
 
 void *mx_realloc(void *ptr, size_t size) {
     if (ptr == NULL)
@@ -19,5 +17,9 @@ void *mx_realloc(void *ptr, size_t size) {
     mx_memcpy(p, ptr, sz);
     free(ptr);
     return p;
+}
+
+static int my_min(int a, int b) {
+    return a < b ? a : b;
 }
 

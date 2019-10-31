@@ -1,5 +1,6 @@
-int mx_strcmp(char *s1, char *s2);
-int compare(char *s1, char *s2);
+#include "libmx.h"
+
+static int compare(char *s1, char *s2);
 
 int mx_bubble_sort(char **arr, int size) {
     int count = 0;
@@ -17,7 +18,7 @@ int mx_bubble_sort(char **arr, int size) {
     return count;
 }
 
-int compare(char *s1, char *s2) {
+static int compare(char *s1, char *s2) {
     return mx_strcmp(s1, s2);
 }
 

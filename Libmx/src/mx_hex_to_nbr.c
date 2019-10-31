@@ -1,4 +1,4 @@
-unsigned long mx_hex_to_nbr(const char *hex);
+#include "libmx.h"
 
 static int get_dec_digit(char c);
 

@@ -51,6 +51,7 @@ mx_create_node \
 mx_push_front \
 mx_push_back \
 mx_pop_back \
+mx_pop_front \
 mx_list_size \
 mx_sort_list \
 
@@ -64,7 +65,7 @@ OBJS = $(addprefix obj/, $(OBJ))
 
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
 
-all: clean install
+all: install clean
 install:
 	@mkdir obj
 	@cp $(SRCS) .

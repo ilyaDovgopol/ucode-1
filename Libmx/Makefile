@@ -1,6 +1,6 @@
 NAME = libmx.a
 
-SRC = mx_printchar \
+S = mx_printchar \
 mx_print_unicode \
 mx_printstr \
 mx_print_strarr \
@@ -11,9 +11,9 @@ mx_nbr_to_hex \
 mx_hex_to_nbr \
 mx_itoa \
 mx_foreach \
-mx_binarysearch \
+mx_binary_search \
 mx_bubble_sort \
-mx_quick_sort \
+mx_quicksort \
 mx_strlen \
 mx_swap_char \
 mx_str_reverse \
@@ -54,29 +54,30 @@ mx_pop_back \
 mx_list_size \
 mx_sort_list \
 
-INC = libmx
-
-SRCS = $(addsuffix .c, $(SRC))
-
-INCS = $(addsuffix .h, $(INC))
-
-O = $(addsuffix .o, $(SRC))
+I = libmx
+SRC = $(addsuffix .c, $(S))
+INC = $(addsuffix .h, $(I))
+OBJ = $(addsuffix .o, $(S))
+SRCS = $(addprefix src/, $(SRC))
+INCS = $(addprefix inc/, $(INC))
+OBJS = $(addprefix obj/, $(OBJ))
 
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
 
-all: install clean
-
+all: clean install
 install:
-	@cp $(addprefix src/, $(SRCS)) .
-	@cp $(addprefix inc/, $(INCS)) .
-	clang $(CFLAGS) -c $(SRCS) -I $(INCS)
-
+	@mkdir obj
+	@cp $(SRCS) .
+	@cp $(INCS) .
+	@clang $(CFLAGS) -c $(SRC) -I $(INC)
+	@ar -rc $(NAME) $(OBJ)
+	@cp $(OBJ) ./obj
+	@rm $(OBJ)
 uninstall:
-	rm -rf $(INC).a
+	@rm -rf $(NAME)
 	clean
-
 clean:
-	rm -rf obj $(INCS) $(SRCS) $(SRCS:.c=.o)
-
+	@rm -rf ./obj
+	@rm $(SRC) $(INC)
 reinstall:
 	uninstall all

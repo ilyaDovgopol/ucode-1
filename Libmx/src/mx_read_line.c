@@ -22,7 +22,7 @@ int mx_read_line(char **lineptr, int buf_size, char delim, const int fd) {
         free(tmp_str);
         num_of_read_bytes += len;
         if (index != -1) {
-            remainder = mx_newline(&buf_str[index + 1]);
+            remainder = mx_strdup(&buf_str[index + 1]);
         }
         if (res < buf_size || index != -1) break;
     }

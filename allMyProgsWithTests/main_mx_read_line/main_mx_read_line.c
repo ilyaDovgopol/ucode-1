@@ -1,4 +1,9 @@
-#include "../libmx.h"
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 int mx_read_line(char **lineptr, int buf_size, char delim, const int fd);
 

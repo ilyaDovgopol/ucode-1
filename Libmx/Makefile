@@ -79,6 +79,6 @@ uninstall:
 	clean
 clean:
 	@rm -rf ./obj
-	@rm $(SRC) $(INC)
+	@rm $(SRC) $(INC) $(OBJ)
 reinstall:
 	uninstall all

@@ -60,6 +60,8 @@ SRCS = $(addsuffix .c, $(SRC))
 
 INCS = $(addsuffix .h, $(INC))
 
+O = $(addsuffix .o, $(SRC))
+
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
 
 all: install clean

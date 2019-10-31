@@ -15,6 +15,7 @@ char *mx_replace_substr(const char *str, const char *sub, const char *replace) {
         free(old_str);
         old_str = new_str;
     }
+    free(old_star); // deal with memory leaks
     return new_str;
 }
 

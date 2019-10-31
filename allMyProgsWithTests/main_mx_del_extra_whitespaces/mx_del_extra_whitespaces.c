@@ -10,7 +10,7 @@ char *mx_strnew(const int size);
 void mx_strdel(char **str);
 int mx_strlen(const char *s);
 
-static void fill_new_string(char *new_s, char *s);
+//static void fill_new_string(char *new_s, char *s);
 static void mx_count_words(const char *str, int* count, int *length);
 static bool go_through_space(char **str);
 static void copy_notspace(char **new_s, char **str);
@@ -36,19 +36,19 @@ char *mx_del_extra_whitespaces(const char *str) {
 /**
  * copies while not isspace and if first isspace adds space. Takes care of NULL
  */
-static void fill_new_string(char *new_s, char *str) {
-    if (new_s == NULL) return;
+// static void fill_new_string(char *new_s, char *str) {
+//     if (new_s == NULL) return;
 
-    if (!go_through_space(&str))
-        return;
+//     if (!go_through_space(&str))
+//         return;
 
-    copy_notspace(&new_s, &str);
-    while (go_through_space(&str)) {
-        *new_s = ' ';
-        new_s++;
-        copy_notspace(&new_s, &str);
-    }
-}
+//     copy_notspace(&new_s, &str);
+//     while (go_through_space(&str)) {
+//         *new_s = ' ';
+//         new_s++;
+//         copy_notspace(&new_s, &str);
+//     }
+// }
 
 static bool go_through_space(char **str) {
     while (mx_isspace(**str) && **str) {

@@ -1,7 +1,7 @@
 #include <stdbool.h>
 
 double mx_pow(double n, unsigned int pow);
-static const int count_numofgigits(int num);
+static int count_numofgigits(int num);
 
 bool mx_is_narcissistic(int num) {
     int pow = count_numofgigits(num);
@@ -18,7 +18,7 @@ bool mx_is_narcissistic(int num) {
     return narc == num;
 }
 
-static const int count_numofgigits(int num) {
+static int count_numofgigits(int num) {
     int l = 1;
     while ((num = num / 10) > 0){
         l++; 

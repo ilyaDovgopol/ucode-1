@@ -15,9 +15,9 @@ typedef unsigned char byte;
 #include <stddef.h>
 #include <stdbool.h>
 #include <fcntl.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <stdio.h>
-#include <malloc/malloc.h>
+//#include <malloc/malloc.h>
 
 // Utils
 void mx_printchar(char c);

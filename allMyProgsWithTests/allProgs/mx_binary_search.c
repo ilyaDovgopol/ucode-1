@@ -1,4 +1,5 @@
-int mx_strcmp(char *s1, char *s2);
+#include "libmx.h"
+
 static int compare(char *s1, char *s2);
 
 int mx_binary_search(char **arr, int size, const char *s, int *count) {

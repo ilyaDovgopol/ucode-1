@@ -39,4 +39,3 @@ char *mx_del_extra_spaces(const char *str) {
     return ss;
 }
 
-

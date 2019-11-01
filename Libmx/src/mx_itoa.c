@@ -4,6 +4,10 @@ static void nbrtodec_rec(int n, char *s);
 static void add(int last_digit, char *s);
 
 char *mx_itoa(int nbr) {
+    if (nbr == -2147483648) {
+        char *s = mx_strdup("-2147483648");
+        return s;
+    }
     char *s = mx_strnew(11);
     if (nbr < 0) {
         s[0] = '-';

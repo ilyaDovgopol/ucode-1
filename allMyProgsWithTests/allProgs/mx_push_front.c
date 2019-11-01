@@ -2,6 +2,7 @@
 // Created by Oleg on 2019-10-24.
 //
 #include "libmx.h"
+
 void mx_push_front(t_list **list, void *data) {
     if (list == NULL) return;
 

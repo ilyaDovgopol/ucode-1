@@ -1,5 +1,4 @@
-int mx_strlen(char *c);
-void mx_swap_char(char *s1, char *s2);
+#include "libmx.h"
 
 void mx_str_reverse(char *s) {
     if (!s)
@@ -11,3 +10,4 @@ void mx_str_reverse(char *s) {
         mx_swap_char(&s[i], &s[len - i - 1]);
     }
 }
+

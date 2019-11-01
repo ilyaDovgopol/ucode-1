@@ -1,12 +1,3 @@
-// #include <stddef.h>
-// #include <stdlib.h>
-// #include <stdbool.h>
-
-// char *mx_strncpy(char *dst, const char *src, int len);
-// char *mx_strnew(const int size);
-// void mx_strdel(char **str);
-// int mx_count_words(const char *str, char delimiter);
-
 #include "libmx.h"
 
 static bool is_next_word(int *start, int *end, char *s, char c);

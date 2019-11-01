@@ -1,13 +1,5 @@
-// #include <stdbool.h>
-// #include <stddef.h>
-
-// bool mx_isspace(char c);
-// void mx_strdel(char **str);
-// char *mx_strnew(const int size);
-// int mx_strlen(const char *);
-// char *mx_strncpy(char *dst, const char *src, int len);
-
 #include "libmx.h"
+
 static bool my_isspace(char c);
 
 char *mx_strtrim(const char *str) {

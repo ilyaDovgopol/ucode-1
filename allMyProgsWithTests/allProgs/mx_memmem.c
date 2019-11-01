@@ -10,7 +10,7 @@ void *mx_memmem(const void *haystack, size_t hs_len, const void *needle, size_t 
         return (void *) mx_memchr(hs, ne[0], hs_len);
 
     /* Ensure haystack length is >= needle length.  */
-    if (hs_len < ne_len)
+    if (hs_len < ne_len || haystack == NULL || needle == NULL) // added NULL cases
         return NULL;
     
     // for long needle
@@ -18,7 +18,7 @@ void *mx_memmem(const void *haystack, size_t hs_len, const void *needle, size_t 
     while (hs <= end) {
         if (mx_memcmp(hs, ne, ne_len) == 0)
             return hs;
-        hs = hs + 1;
+        hs++;
     }
     return NULL;
 }

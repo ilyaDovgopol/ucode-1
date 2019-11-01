@@ -3,7 +3,7 @@
 static int my_min(int a, int b);
 
 void *mx_realloc(void *ptr, size_t size) {
-    if (ptr == NULL && size)
+    if (ptr == NULL && size != 0)
         return malloc(size);
     if (size == 0) {
         free(ptr);

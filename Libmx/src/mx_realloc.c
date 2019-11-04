@@ -15,7 +15,7 @@ void *mx_realloc(void *ptr, size_t size) {
     void *p = malloc(size);
     if (p == NULL) return NULL;
  
-    mx_memcpy(p, ptr, sz);
+    mx_memmove(p, ptr, sz);
     free(ptr);
     ptr = NULL;
     return p;

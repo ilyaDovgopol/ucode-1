@@ -10,9 +10,10 @@ static void prt_arr(char **arr, int n) {
 }
 
 int main(void) {
-    printf("\nTest quick sort\n");
+    printf("----------------\nTest quick sort\n");
     //char *arr[] = {"xyz", "abc", "ghi", "def"};
-    char *arr[] = { "123456", "12", "12345", "1234567", "1234", "123", "1"};
+    char *arr[] = { "123456", "12", "12345", "12", "1234", "123", "123456"};
+    //char *arr[] = {"1234567", "123456", "12345", "1234", "123", "12", "1"};
     //char *arr[] = {"Michelangelo", "Donatello", "Leonardo", "Raphael"};
   
     int n = 7;

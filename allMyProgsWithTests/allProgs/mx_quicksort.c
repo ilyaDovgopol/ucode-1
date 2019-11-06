@@ -4,13 +4,13 @@ static int comparator(char *s1, char *s2);
 static void swap(char **s1, char **s2, int *count);
 //static int partition(char **arr, int lo, int hi, int *count);
 
-static void prt_arr(char **arr, int n) {
-    printf("arr={\'%s\'", arr[0]);
-    for (int i = 1; i < n; i++) {
-        printf(", \'%s\'", arr[i]);
-    }
-    printf("}\n---\n");
-}
+// static void prt_arr(char **arr, int n) {
+//     printf("arr={\'%s\'", arr[0]);
+//     for (int i = 1; i < n; i++) {
+//         printf(", \'%s\'", arr[i]);
+//     }
+//     printf("}\n---\n");
+// }
 
 int mx_quicksort(char **arr, int low, int high) {
     //implimantaion https://www.programcreek.com/2012/11/quicksort-array-in-java/

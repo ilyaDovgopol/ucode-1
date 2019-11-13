@@ -11,8 +11,8 @@
 typedef struct s_APP {
     int SIZE;
     char **city; 
-    int **a;
-    int **dist;
+    int *AM;
+    int *dist;
     //t_list *all_paths;
     int invalid_line_number;
     char *file_name;

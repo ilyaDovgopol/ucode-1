@@ -79,6 +79,49 @@ bool parse_line(char *line, char **arg1, char **arg2, int *arg3) {
     return true;
 }
 
+void init_city(t_App *app) {
+    app->city = malloc(app->SIZE * sizeof (char *));
+    if (app->city == NULL) {
+        exit(1);
+    }
+    for (int i = 0; i < app->SIZE; i++) {
+        app->city[i] = NULL;
+    }
+}
+
+void push_element_in_city(char *elem, t_App *app) {
+    char **city = app->city;
+    //go through city to find elem
+    int i;
+    for (i = 0; i < app->SIZE; i++) {
+        if (city[i] == NULL)
+            break;
+        if (mx_strcmp(city[i], elem) == 0)
+            return;
+    }
+    //if not add to city
+    if (i < app->SIZE)
+        city[i] = mx_strdup(elem);
+}
+
+int index_in_city(char *elem, t_App *app) {
+    for (int i = 0; i < app->SIZE; i++)
+        if ( mx_strcmp(app->city[i], elem) == 0)
+            return i;
+    return -1;
+}
+
+void init_adjacency_matrix(t_App *app) {
+    app->AM = malloc(app->SIZE * app->SIZE * sizeof(int));
+    for (int i = 0; i < app->SIZE; i++)
+        for (int j = 0 ; j < app->SIZE; j++) {
+            if (i == j)
+                app->AM[i * app->SIZE + j] = 0;
+            else
+                app->AM[i * app->SIZE + j] = 2147483647;
+        }
+}
+
 void initialize(int argc, char *argv[], t_App *app) {
     //TODO: validate arguments
     // if (argc != 2) {
@@ -102,7 +145,11 @@ void initialize(int argc, char *argv[], t_App *app) {
     app->SIZE = my_atoi(str_parsed[0]); 
     if (app->SIZE == -1)
         cast_error_message(Line1_isnt_valid, app);
+    printf("line 0) %d\n", app->SIZE);
+
     // parse the rest of lines
+    init_city(app);
+    init_adjacency_matrix(app);
     for (int i = 1; i <= app->SIZE; i++) {
         char *arg1 = NULL;
         char *arg2 = NULL;
@@ -111,9 +158,15 @@ void initialize(int argc, char *argv[], t_App *app) {
             cast_error_message(Invalid_Number_of_Islands, app);
         }
         if (parse_line(str_parsed[i], &arg1, &arg2, &arg3)) {
-            //printf("arg1=\'%s\' arg2=\'%s\' int=\'%d\'\n", arg1, arg2, arg3); // DEBUG: delete
+            printf("line %d) arg1=\'%s\' arg2=\'%s\' int=%d\n", i, arg1, arg2, arg3); // DEBUG: delete
             // TODO: input  arg1 and arg2 into city
+            push_element_in_city(arg1, app);
+            push_element_in_city(arg2, app);
             // TODO: fill a-matrix
+            int i = index_in_city(arg1, app);
+            int j = index_in_city(arg2, app);
+            app->AM[i * app->SIZE + j] = arg3;
+            app->AM[j * app->SIZE + i] = arg3;
         }
         else {
             free(arg1);
@@ -124,6 +177,20 @@ void initialize(int argc, char *argv[], t_App *app) {
         free(arg1);
         free(arg2);
     }
+
+    printf("Print city=");                 //DEBUG delete
+    for (int i = 0; i < app->SIZE; i++) {
+        if (app->city[i] != NULL)
+            printf("(%s) ", app->city[i]);
+    }                                        //DEBUG delete
+    printf("Print Adjancency matix:\n");     //DEBUG delete
+    for (int i = 0; i < app->SIZE; i++) {
+        for (int j = 0 ; j < app->SIZE; j++)
+            printf("%d\t", app->AM[i * app->SIZE + j]);
+        
+        printf("\n");
+    }                                        //DEBUG delete
+
     //if more lines then given number
     if (str_parsed[app->SIZE + 1] != NULL) {
         cast_error_message(Invalid_Number_of_Islands, app);

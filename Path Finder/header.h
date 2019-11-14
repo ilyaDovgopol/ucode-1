@@ -12,11 +12,17 @@ typedef struct s_APP {
     int SIZE;
     char **city; 
     int *AM;
-    int *dist;
+    int *dist_M;
     //t_list *all_paths;
     int invalid_line_number;
     char *file_name;
 } t_App;
+
+ typedef struct {
+        int *path;
+        int size;
+        int max_size;
+    } t_stack;
 
 typedef enum Err {
     Invalid_Number_Of_CommandLine,

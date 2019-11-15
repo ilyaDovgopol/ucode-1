@@ -310,44 +310,24 @@ bool is_next(t_App *app, t_stack *st, int *cur) {
 char *get_name_by_id(int i, t_App *app) {
     return app->city[i];
 }
-void print_line(void) {
-    char s[]= "========================================\n";
-    mx_printstr(s);
-}
 
 void print_path(t_App *app, t_stack *st) {
-    // printf("Path: %s -> %s:\nRoute: ",
-    //         get_name_by_id (st->path[0], app), 
-    //         get_name_by_id(st->path[1], app)
-    //       );
-    mx_printstr("Path: ");
-    mx_printstr(get_name_by_id (st->path[0], app));
-    mx_printstr(" -> ");
-    mx_printstr(get_name_by_id(st->path[1], app));
-}
+    printf("========================================\n");
+    printf("Path: %s -> %s:\nRoute: ",
+            get_name_by_id (st->path[0], app), 
+            get_name_by_id(st->path[1], app)
+          );
 
-void print_route(t_App *app, t_stack *st) {
-    mx_printstr(":\nRoute: ");
     for(int i = st->size; i >= 2; i--) {
-        //printf("%s -> ", get_name_by_id(st->path[i], app));
-        mx_printstr(get_name_by_id(st->path[i], app));
-        mx_printstr(" -> ");
-
+        printf("%s -> ", get_name_by_id(st->path[i], app));
     }
-    //printf("%s\n", get_name_by_id(st->path[1], app));
-    mx_printstr(get_name_by_id(st->path[1], app));
-    mx_printstr("\n");
-}
-
-void print_distance(t_App *app, t_stack *st) {
-    mx_printstr("Distance: ");
+    printf("%s\n", get_name_by_id(st->path[1], app));
+    printf("Distance: ");
     int total_dist = 0;
     for(int i = st->size - 1; i >= 2; i--) {
         int dist = app->AM[st->path[i] * app->SIZE + st->path[i + 1]];
         total_dist += dist;
-        //printf("%d + ", dist);
-        mx_printstr(mx_itoa(dist));
-        mx_printstr(" + ");
+        printf("%d + ", dist);
     }
     if (total_dist != 0) {
         int dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
@@ -355,23 +335,25 @@ void print_distance(t_App *app, t_stack *st) {
         printf("%d = ", dist);
     }
     else total_dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
-    printf("%d", total_dist);
-    mx_printstr("\n");
-}
+    printf("%d\n", total_dist);
+    printf("========================================\n");
 
-void print_path_info(t_App *app, t_stack *st) {
-    print_line();
-    print_path(app, st);
-    print_route(app, st);
-    print_distance(app, st);
-    print_line();
+    // printf("Path %d -> %d:\nRoute: ",
+    //         st->path[0], 
+    //         st->path[1]
+    //       );
+
+    // for(int i = st->size; i >= 2; i--) {
+    //     printf("%d -> ", st->path[i]);
+    // }
+    // printf("%d\n", st->path[1]);
 }
 // -------------------------------------------------------
 
 void restore_path_Helper(t_App *app, t_stack *st) {
     // base case
     if (get_from_stack(st) == st->path[0]) {
-        print_path_info(app, st);
+        print_path(app, st);
         return;
     }
     else { // recursive case
@@ -406,7 +388,7 @@ void restore_all_paths(t_App *app) {
     }
 }
 
-void make_allpaths_and_print(t_App *app) {
+void produce_allpaths(t_App *app) {
     make_cost_matrix(app);
     // printf("Print cost matix:\n");     //DEBUG delete
     // for (int i = 0; i < app->SIZE; i++) {
@@ -416,6 +398,10 @@ void make_allpaths_and_print(t_App *app) {
     //     printf("\n");
     // }                                  //DEBUG delete
     restore_all_paths(app);
+}
+
+void print_allpaths(t_App *app) {
+
 }
 // ------------------------------------------------------------------
 void delete_matrix(int *m) {
@@ -433,7 +419,8 @@ int main(int argc, char *argv[]) {
     t_App *app = malloc(sizeof(t_App));
    
     initialize(argc, argv, app);
-    make_allpaths_and_print(app);
+    produce_allpaths(app);
+    print_allpaths(app);
     free_all(app);
     return 0;
 }

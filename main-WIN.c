@@ -36,10 +36,7 @@ void cast_error_message(e_Error err, t_App *app) {
             break;
         case Line_isnt_Valid:
             mx_printerr("error:  line ");
-            char *snum = mx_itoa(app->invalid_line_number);
-            mx_printerr(snum);
-            free(snum);
-            snum = NULL;
+            mx_printerr(mx_itoa(app->invalid_line_number));
             mx_printerr(" isn't valid");
             //printf("error:  line %d  isn't valid", app->invalid_line_number);
             break;
@@ -127,36 +124,23 @@ void init_adjacency_matrix(t_App *app) {
         }
 }
 
-// void read_file(int argc, char *argv[], t_App *app) {
-//     //TODO: read file and validate if file empty or do not exist
-//     app->file_to_str = mx_file_to_str(argv[1]);
-//     char *str = app->file_to_str;
-//     app->file_name = argv[1];
-//     if (str == NULL) {
-//         cast_error_message(File_Doesnt_Exist, app);
-//     }
-//     if (mx_strlen(str) == 0) {
-//         cast_error_message(File_Is_Empty, app);
-//     }
-//     //TODO: проверить строка заканчивается на \0 или на EOF      -----------------!!!!!!!!!!!!!!!!!!!!!!!!
-//     str[mx_strlen(str)] = '\0';
-// }
-
 void initialize(int argc, char *argv[], t_App *app) {
-    argc = 2;
-    argv = NULL;
-    // initialize
-    app->city = NULL;    // in heap
-    app->AM = NULL;         // in heap
-    app->dist_M = NULL;     // in heap
-    app->parsed_lines_array = NULL;   // in heap
-    app->file_to_str = NULL;           // in heap
-
     //TODO: validate arguments
-    if (argc != 2) {
-        cast_error_message(Invalid_Number_Of_CommandLine, app);
-    }
-    //read_file(argc, argv, app);
+    // if (argc != 2) {
+    //     cast_error_message(Invalid_Number_Of_CommandLine, app);
+    // }
+    //TODO: read file and validate if file empty or do not exist
+    // app->file_to_str = mx_file_to_str(argv[1]);
+    // char *str = app->file_to_str;
+    // app->file_name = argv[1];
+    // if (str == NULL) {
+    //     cast_error_message(File_Doesnt_Exist, app);
+    // }
+    // if (mx_strlen(str) == 0) {
+    //     cast_error_message(File_Is_Empty, app);
+    // }
+    //TODO: проверить строка заканчивается на \0 или на EOF      -----------------!!!!!!!!!!!!!!!!!!!!!!!!
+    // str[mx_strlen(str)] = '\0';
     //char str[] = "4\nGreenland-Bananal,8\nFraser-Greenland,10\nBananal-Fraser,3\nJava-Fraser,5\n"; // DEBUG: delete
     
     char str[] = "5\nA-B,11\nA-C,10\nB-D,5\nC-D,6\nC-E,15\nD-E,4\n";
@@ -231,6 +215,10 @@ void initialize(int argc, char *argv[], t_App *app) {
         //printf("here 2\n");
         cast_error_message(Invalid_Number_of_Islands, app);
     }
+    // if (str_parsed[app->SIZE + 1] != NULL) {
+    //     printf("here 2\n");
+    //     cast_error_message(Invalid_Number_of_Islands, app);
+    // }
 }
 
 // ---------------------------------------------------------------------
@@ -358,20 +346,16 @@ void print_distance(t_App *app, t_stack *st) {
         int dist = app->AM[st->path[i] * app->SIZE + st->path[i + 1]];
         total_dist += dist;
         //printf("%d + ", dist);
-        mx_printint(dist);
+        mx_printstr(mx_itoa(dist));
         mx_printstr(" + ");
     }
     if (total_dist != 0) {
         int dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
         total_dist += dist;
-        //printf("%d = ", dist);
-        mx_printint(dist);
-        mx_printstr(" = ");
+        printf("%d = ", dist);
     }
-    else
-       total_dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
-    //printf("%d", total_dist);
-    mx_printint(total_dist);
+    else total_dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
+    printf("%d", total_dist);
     mx_printstr("\n");
 }
 
@@ -386,8 +370,8 @@ void print_path_info(t_App *app, t_stack *st) {
 
 void restore_path_Helper(t_App *app, t_stack *st) {
     // base case
-    if (get_from_stack(st) == st->path[0]) { //TODO: HERE IS WRONG CHECK should be some thing like:
-        print_path_info(app, st);             // if (DM[i * size + j] - AM[j * size + k] == DM[i * size + k])
+    if (get_from_stack(st) == st->path[0]) {
+        print_path_info(app, st);
         return;
     }
     else { // recursive case
@@ -435,8 +419,7 @@ void make_allpaths_and_print(t_App *app) {
 }
 // ------------------------------------------------------------------
 void delete_matrix(int *m) {
-    if (m != NULL)
-        free(m);
+    free(m);
 }
 void free_all( t_App *app) {
     mx_del_strarr(&(app->city));
@@ -446,13 +429,12 @@ void free_all( t_App *app) {
     free(app->file_to_str);
 }
 // ------------------------------------------------------------------
-int main(int argc, char *argv[]) {
+int main_WIN(int argc, char *argv[]) {
     t_App *app = malloc(sizeof(t_App));
-
+   
     initialize(argc, argv, app);
     make_allpaths_and_print(app);
     free_all(app);
-    system("leaks -q a.out");
+    system("leaks -q endgame");
     return 0;
 }
-

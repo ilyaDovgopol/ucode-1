@@ -1,6 +1,6 @@
-#include <stdio.h>
+#include "header.h"
 
 void mx_printerr(const char *s) {
-    printf("%s", s);
+    write(2, s, mx_strlen(s));
 }
 

@@ -1,7 +1,9 @@
 #include "libmx.h"
-#include <stdio.h>
 
 void mx_printstr(const char *s) {
-    printf("%s", s);
+    if (!s) {
+        return;
+    }
+    write(1, s, mx_strlen(s));
 }
 

@@ -1,14 +1,70 @@
 #include "libmx.h"
 #include "header.h" 
-//#include <stdlib.h> // TODO: delete
+// ----------------------------------------  test
+#include <stdio.h>
+void test_print_file_to_str(char *str) {
+    printf("---   Print file   ---\n");
+    if (str == NULL)
+        printf("ERROR: str == NULL\n");
+    else
+        printf("\"%s\"\n", str);
+    printf("Size of file: %d\n", mx_strlen(str));
+}
+
+void test_print_str(char **str_parsed) {
+    printf("---   str_parsed   ---\n{");
+    int i;
+    for (i = 0; str_parsed[i] != NULL; i++)
+        printf("\"%s\",",  str_parsed[i]);
+    printf(" NULL }\n");
+}
+
+void test_paresd_args(char *arg1, char *arg2, char *number) {
+    printf("---   in parse_line: arg1=\'%s\' arg2=\'%s\' int=\'%s\'\n", arg1, arg2, number);
+}
+
+void text_print_CITY(t_App *app) {
+    printf("---- Print city: ----\n");
+    for (int i = 0; i < app->SIZE; i++) {
+        if (app->city[i] != NULL)
+            printf("%d) %s\n", i, app->city[i]);
+        else
+            printf("%d) NULL\n", i);
+    }
+    printf("SIZE = %d\n", app->SIZE);  
+    printf("--------\n");  
+}
+
+void test_print_AM(t_App *app){                                     // TEST    
+    printf("----- Print Adjancency matix:   -----\n");     //DEBUG delete
+    for (int i = 0; i < app->SIZE; i++) {
+        for (int j = 0 ; j < app->SIZE; j++)
+            printf("%d\t", app->AM[i * app->SIZE + j]);
+        
+        printf("\n");
+    }                                        //DEBUG delete
+}
+
+void test_print_cost_matrix(t_App *app) {
+    printf("Print cost matix:\n");     //DEBUG delete
+    for (int i = 0; i < app->SIZE; i++) {
+        for (int j = 0 ; j < app->SIZE; j++)
+            printf("%d\t", app->dist_M[i * app->SIZE + j]);
+        
+        printf("\n");
+    }    
+}
+// ----------------------------------------
 
 int my_atoi(char *s) {   // TODO: do it
+    //if (s[0] == '\0') return -1; // empty
     int res = 0;
     while (*s != '\0') {
         if (!mx_isdigit(*s)) return -1;
         res = 10 * res + (*s) - '0';
         s++;
-    } 
+    }
+    if (res == 0) res = -1;
     return res;
 }
 
@@ -16,36 +72,38 @@ void cast_error_message(e_Error err, t_App *app) {
     switch (err) {
         case Invalid_Number_Of_CommandLine:
             mx_printerr("usage: ./pathfinder [filename]");
-            //printf("usage: ./pathfinder [filename]");
             break;
+
         case File_Doesnt_Exist:
             mx_printerr("error: file ");
             mx_printerr(app->file_name);
             mx_printerr(" doesn't exist");
-            //printf("error: file doesn't exist");
             break;
+
         case File_Is_Empty:
             mx_printerr("error: file ");
             mx_printerr(app->file_name);
-            mx_printerr("  is empty");
-            //printf("error: file is empty");
+            mx_printerr(" is empty");
             break;
+
         case Line1_isnt_valid:
             mx_printerr("error: line 1 isn't valid"); 
-            //printf("line 1 isn't valid");             // !!!!!!!!!!!!!!  TODO: delete comment
             break;
+
         case Line_isnt_Valid:
-            mx_printerr("error:  line ");
-            mx_printerr(mx_itoa(app->invalid_line_number));
+            mx_printerr("error: line ");
+            char *snum = mx_itoa(app->invalid_line_number);
+            mx_printerr(snum);
+            free(snum);
+            snum = NULL;
             mx_printerr(" isn't valid");
-            //printf("error:  line %d  isn't valid", app->invalid_line_number);
             break;
+
         case Invalid_Number_of_Islands:
             mx_printerr("error: invalid number of islands");
-            //printf("error: invalid number of islands");
             break;
     }
-    mx_printerr("\n");  // !!!!!!!!!!!!!!  TODO: delete comment
+    mx_printerr("\n");
     free_all(app);
     exit(1);
 }
@@ -74,7 +132,7 @@ bool parse_line(char *line, char **arg1, char **arg2, int *arg3) {
     *arg3 = my_atoi(number);
     if (*arg3 == -1)
         return false;
-    //printf("in parse_line: arg1=\'%s\' arg2=\'%s\' int=\'%s\'\n", *arg1, *arg2, number); // DEBUG: delete
+    //test_paresd_args(*arg1, *arg2, number);                                    // TEST
     free(number);
     return true;
 }
@@ -99,11 +157,12 @@ void push_element_in_city(char *elem, t_App *app) {
         if (mx_strcmp(city[i], elem) == 0)
             return;
     }
-    //if not add to city
+    //add elem to city
     if (i < app->SIZE)
         city[i] = mx_strdup(elem);
-    else
+    else { //  if too many elem
         cast_error_message(Invalid_Number_of_Islands, app);
+    }
 }
 
 int index_in_city(char *elem, t_App *app) {
@@ -124,43 +183,52 @@ void init_adjacency_matrix(t_App *app) {
         }
 }
 
-void initialize(int argc, char *argv[], t_App *app) {
-    //TODO: validate arguments
-    // if (argc != 2) {
-    //     cast_error_message(Invalid_Number_Of_CommandLine, app);
-    // }
-    //TODO: read file and validate if file empty or do not exist
-    // app->file_to_str = mx_file_to_str(argv[1]);
-    // char *str = app->file_to_str;
-    // app->file_name = argv[1];
-    // if (str == NULL) {
-    //     cast_error_message(File_Doesnt_Exist, app);
-    // }
-    // if (mx_strlen(str) == 0) {
-    //     cast_error_message(File_Is_Empty, app);
-    // }
+char *read_file(char *argv[], t_App *app) {
+    app->file_name = argv[1];
+    // Check if file exists
+    int fd = open(argv[1], O_RDONLY);
+    if (fd < 0) {
+        close(fd);
+        cast_error_message(File_Doesnt_Exist, app);
+    }
+    close(fd);
+
+    //read file and validate if file empty
+    app->file_to_str = mx_file_to_str(argv[1]);
+    char *str = app->file_to_str;
+    if (mx_strlen(str) == 0) {
+        cast_error_message(File_Is_Empty, app);
+    }
     //TODO: проверить строка заканчивается на \0 или на EOF      -----------------!!!!!!!!!!!!!!!!!!!!!!!!
-    // str[mx_strlen(str)] = '\0';
-    //char str[] = "4\nGreenland-Bananal,8\nFraser-Greenland,10\nBananal-Fraser,3\nJava-Fraser,5\n"; // DEBUG: delete
-    
-    char str[] = "5\nA-B,11\nA-C,10\nB-D,5\nC-D,6\nC-E,15\nD-E,4\n";
-    
+    return str;
+}
+
+void initialize(int argc, char *argv[], t_App *app) {
+
+    // initialize
+    app->city = NULL;    // in heap
+    app->AM = NULL;         // in heap
+    app->dist_M = NULL;     // in heap
+    app->parsed_lines_array = NULL;   // in heap
+    app->file_to_str = NULL;           // in heap
+
+    //TODO: validate arguments
+    if (argc != 2) {
+        cast_error_message(Invalid_Number_Of_CommandLine, app);
+    }
+    char *str = read_file(argv, app);
+    //test_print_file_to_str(str);                               // TEST
     
     // validate str:
     // parse by \n
     app->parsed_lines_array = mx_strsplit(str, '\n');
     char **str_parsed = app->parsed_lines_array;
-    // printf("str_parsed\n");                      // DEBUG delete
-    // int i;
-    // for (i = 0; str_parsed[i] != NULL; i++)
-    //     printf("%d:%s\n", i, str_parsed[i]);
-    // printf("%d:NULL\n", i);                      // DEBUG delete
+    //test_print_str(str_parsed);                                // TEST
 
     // parse 1-st line
     app->SIZE = my_atoi(str_parsed[0]); 
     if (app->SIZE == -1)
         cast_error_message(Line1_isnt_valid, app);
-    //printf("line 0) %d\n", app->SIZE);
 
     // parse the rest of lines
     init_city(app);
@@ -173,11 +241,9 @@ void initialize(int argc, char *argv[], t_App *app) {
         //     cast_error_message(Invalid_Number_of_Islands, app);
         // }
         if (parse_line(str_parsed[i], &arg1, &arg2, &arg3)) {
-            //printf("line %d) arg1=\'%s\' arg2=\'%s\' int=%d\n", i, arg1, arg2, arg3); // DEBUG: delete
-            // TODO: input  arg1 and arg2 into city
             push_element_in_city(arg1, app);
             push_element_in_city(arg2, app);
-            // TODO: fill a-matrix
+            // TODO: fill adjacency matrix
             int i = index_in_city(arg1, app);
             int j = index_in_city(arg2, app);
             app->AM[i * app->SIZE + j] = arg3;
@@ -192,33 +258,13 @@ void initialize(int argc, char *argv[], t_App *app) {
         free(arg1);
         free(arg2);
     }
-
-    // printf("-------\nPrint city:\n");                 //DEBUG delete
-    // for (int i = 0; i < app->SIZE; i++) {
-    //     if (app->city[i] != NULL)
-    //         printf("%d) %s\n", i, app->city[i]);
-    //     else
-    //         printf("%d) NULL\n", i);
-    // }  
-    // printf("--------\n");                                      //DEBUG delete
-    
-    // printf("Print Adjancency matix:\n");     //DEBUG delete
-    // for (int i = 0; i < app->SIZE; i++) {
-    //     for (int j = 0 ; j < app->SIZE; j++)
-    //         printf("%d\t", app->AM[i * app->SIZE + j]);
-        
-    //     printf("\n");
-    // }                                        //DEBUG delete
+    //text_print_CITY(app);                                   // TEST
+    //test_print_AM(app);                                     // TEST    
 
     //if more lines then given number
     if (app->city[app->SIZE - 1] == NULL) {
-        //printf("here 2\n");
         cast_error_message(Invalid_Number_of_Islands, app);
     }
-    // if (str_parsed[app->SIZE + 1] != NULL) {
-    //     printf("here 2\n");
-    //     cast_error_message(Invalid_Number_of_Islands, app);
-    // }
 }
 
 // ---------------------------------------------------------------------
@@ -310,50 +356,72 @@ bool is_next(t_App *app, t_stack *st, int *cur) {
 char *get_name_by_id(int i, t_App *app) {
     return app->city[i];
 }
+void print_line(void) {
+    char s[]= "========================================";
+    mx_printstr(s);
+}
 
 void print_path(t_App *app, t_stack *st) {
-    printf("========================================\n");
-    printf("Path: %s -> %s:\nRoute: ",
-            get_name_by_id (st->path[0], app), 
-            get_name_by_id(st->path[1], app)
-          );
+    mx_printstr("Path: ");
+    mx_printstr(get_name_by_id (st->path[0], app));
+    mx_printstr(" -> ");
+    mx_printstr(get_name_by_id(st->path[1], app));
+    mx_printstr("\n");
+}
 
+void print_route(t_App *app, t_stack *st) {
+    mx_printstr("Route: ");
     for(int i = st->size; i >= 2; i--) {
-        printf("%s -> ", get_name_by_id(st->path[i], app));
+        mx_printstr(get_name_by_id(st->path[i], app));
+        mx_printstr(" -> ");
+
     }
-    printf("%s\n", get_name_by_id(st->path[1], app));
-    printf("Distance: ");
+    mx_printstr(get_name_by_id(st->path[1], app));
+    mx_printstr("\n");
+}
+
+void print_distance(t_App *app, t_stack *st) {
+    mx_printstr("Distance: ");
     int total_dist = 0;
     for(int i = st->size - 1; i >= 2; i--) {
         int dist = app->AM[st->path[i] * app->SIZE + st->path[i + 1]];
         total_dist += dist;
-        printf("%d + ", dist);
+        mx_printint(dist);
+        mx_printstr(" + ");
     }
     if (total_dist != 0) {
         int dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
         total_dist += dist;
-        printf("%d = ", dist);
+        mx_printint(dist);
+        mx_printstr(" = ");
     }
-    else total_dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
-    printf("%d\n", total_dist);
-    printf("========================================\n");
+    else
+       total_dist = app->AM[st->path[2] * app->SIZE + st->path[1]];
+    mx_printint(total_dist);
+    mx_printstr("\n");
+}
 
-    // printf("Path %d -> %d:\nRoute: ",
-    //         st->path[0], 
-    //         st->path[1]
-    //       );
-
-    // for(int i = st->size; i >= 2; i--) {
-    //     printf("%d -> ", st->path[i]);
-    // }
-    // printf("%d\n", st->path[1]);
+void print_path_info(t_App *app, t_stack *st) {
+    static bool first_line = true;
+    if (first_line) {
+        first_line = false;
+    }
+    else {
+        mx_printstr("\n");
+    }
+    print_line();
+    mx_printstr("\n");
+    print_path(app, st);
+    print_route(app, st);
+    print_distance(app, st);
+    print_line();
 }
 // -------------------------------------------------------
 
 void restore_path_Helper(t_App *app, t_stack *st) {
     // base case
-    if (get_from_stack(st) == st->path[0]) {
-        print_path(app, st);
+    if (get_from_stack(st) == st->path[0]) { //TODO: HERE IS WRONG CHECK should be some thing like:
+        print_path_info(app, st);             // if (DM[i * size + j] - AM[j * size + k] == DM[i * size + k])
         return;
     }
     else { // recursive case
@@ -388,39 +456,31 @@ void restore_all_paths(t_App *app) {
     }
 }
 
-void produce_allpaths(t_App *app) {
+void make_allpaths_and_print(t_App *app) {
     make_cost_matrix(app);
-    // printf("Print cost matix:\n");     //DEBUG delete
-    // for (int i = 0; i < app->SIZE; i++) {
-    //     for (int j = 0 ; j < app->SIZE; j++)
-    //         printf("%d\t", app->dist_M[i * app->SIZE + j]);
-        
-    //     printf("\n");
-    // }                                  //DEBUG delete
     restore_all_paths(app);
-}
-
-void print_allpaths(t_App *app) {
-
 }
 // ------------------------------------------------------------------
 void delete_matrix(int *m) {
-    free(m);
+    if (m != NULL)
+        free(m);
 }
+
 void free_all( t_App *app) {
     mx_del_strarr(&(app->city));
     delete_matrix(app->AM);
     delete_matrix(app->dist_M);
     mx_del_strarr(&(app->parsed_lines_array));
-    free(app->file_to_str);
+    mx_strdel(&(app->file_to_str));
 }
 // ------------------------------------------------------------------
 int main(int argc, char *argv[]) {
     t_App *app = malloc(sizeof(t_App));
-   
+
     initialize(argc, argv, app);
-    produce_allpaths(app);
-    print_allpaths(app);
+    make_allpaths_and_print(app);
     free_all(app);
+    //system("leaks -q pathfinder hard");                          // TEST
     return 0;
 }
+

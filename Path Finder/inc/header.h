@@ -39,6 +39,11 @@ void mx_printerr(const char *s);
 bool mx_isdigit(int c);
 bool mx_isalpha(int c);
 
+void initialize(int argc, char *argv[], t_App *app);
+void cast_error_message(e_Error err, t_App *app);
+void make_allpaths_and_print(t_App *app);
+void make_cost_matrix(t_App *app);
+void print_path_info(t_App *app, t_stack *st);
 void free_all( t_App *app);
 
 #endif //LIBMX_H

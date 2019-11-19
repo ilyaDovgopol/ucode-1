@@ -332,22 +332,37 @@ int get_from_stack(t_stack *st) {
     return st->path[st->size];
 }
 
-bool is_next(t_App *app, t_stack *st, int *cur) {
-    // is there next possible way from vertex(j) bigger then cur
-    // do linear search
+// bool is_next(t_App *app, t_stack *st, int *cur) {
+//     // is there next possible way from vertex(j) bigger then cur
+//     // do linear search
+//     int j = get_from_stack(st);
+//     int i = st->path[0];
+//     int *AM = app->AM;
+//     int *DM = app->dist_M;
+//     int size = app->SIZE;
+//     //int starting_vertex = *cur == 0 ? 0 : *cur + 1;  !!!!!!!!!!!!!!!!!!!!!!!!!
+//     int starting_vertex = *cur + 1;                   //!!!!!!!!!!!!!!!!!!
+//     for (int k = starting_vertex; k < app->SIZE; k++) {
+//         if (j != k) {
+//             if (DM[i * size + j] - AM[j * size + k] == DM[i * size + k]) {
+//                 *cur = k;
+//                 return true;
+//             }
+//         }
+//     }
+//     return false;
+// }
+bool is_next(t_App *app, t_stack *st, int next) {
+    // is cur is matches short path
     int j = get_from_stack(st);
     int i = st->path[0];
     int *AM = app->AM;
     int *DM = app->dist_M;
     int size = app->SIZE;
-    //int starting_vertex = *cur == 0 ? 0 : *cur + 1;  !!!!!!!!!!!!!!!!!!!!!!!!!
-    int starting_vertex = *cur + 1;                   //!!!!!!!!!!!!!!!!!!
-    for (int k = starting_vertex; k < app->SIZE; k++) {
-        if (j != k) {
-            if (DM[i * size + j] - AM[j * size + k] == DM[i * size + k]) {
-                *cur = k;
-                return true;
-            }
+
+    if (j != next) {
+        if (DM[i * size + j] - AM[j * size + next] == DM[i * size + next]) {
+            return true;
         }
     }
     return false;
@@ -418,6 +433,27 @@ void print_path_info(t_App *app, t_stack *st) {
 }
 // -------------------------------------------------------
 
+// void restore_path_Helper(t_App *app, t_stack *st) {
+//     // base case
+//     if (get_from_stack(st) == st->path[0]) { //TODO: HERE IS WRONG CHECK should be some thing like:
+//         print_path_info(app, st);             // if (DM[i * size + j] - AM[j * size + k] == DM[i * size + k])
+//         return;
+//     }
+//     else { // recursive case
+//         // for all adjecency virtecies to j
+//         //int cur = 0;                         // !!!!!!!!!!!!!!
+//         int cur = -1;                         // !!!!!!!!!!!!!!
+//         while (is_next(app, st, &cur)) {
+//             // choose
+//             push_in_stack(st, cur);
+//             // explore
+//             restore_path_Helper(app, st);
+//             // un-choose
+//             pop_from_stack(st);
+//         }
+//     }
+// }
+
 void restore_path_Helper(t_App *app, t_stack *st) {
     // base case
     if (get_from_stack(st) == st->path[0]) { //TODO: HERE IS WRONG CHECK should be some thing like:
@@ -426,15 +462,15 @@ void restore_path_Helper(t_App *app, t_stack *st) {
     }
     else { // recursive case
         // for all adjecency virtecies to j
-        //int cur = 0;                         // !!!!!!!!!!!!!!
-        int cur = -1;                         // !!!!!!!!!!!!!!
-        while (is_next(app, st, &cur)) {
-            // choose
-            push_in_stack(st, cur);
-            // explore
-            restore_path_Helper(app, st);
-            // un-choose
-            pop_from_stack(st);
+        for (int next = 0; next < app->SIZE; next++) {
+            if (is_next(app, st, next)) {
+                // choose
+                push_in_stack(st, next);
+                // explore
+                restore_path_Helper(app, st);
+                // un-choose
+                pop_from_stack(st);
+            }
         }
     }
 }

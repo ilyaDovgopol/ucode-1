@@ -7,22 +7,23 @@
 typedef struct {
     long ino;
     char name[NAME_MAX + 1];
-} t_Dirent;
+} Dirent;
 
 typedef struct {
     int fd;
-    t_Dirent d;
-} t_DIR;
+    Dirent d;
+} DIR;
 
 
 
-t_DIR *opendir(char *dirname);
-t_Dirent *readdir(t_DIR *dfd);
-void closedir(t_DIR *dfd);
+DIR *opendir(char *dirname);
+Dirent *readdir(DIR *dfd);
+void closedir(DIR *dfd);
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -32,7 +33,7 @@ void closedir(t_DIR *dfd);
 #endif
 struct direct {
     ino_t d_ino;
-    char *d_name[DIRSIZ];
+    char d_name[DIRSIZ];
 };
 
 

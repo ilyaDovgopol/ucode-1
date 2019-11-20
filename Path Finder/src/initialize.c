@@ -9,7 +9,7 @@ static int index_in_city(char *elem, t_App *app);
 static void init_adjacency_matrix(t_App *app);
 static char *read_file(char *argv[], t_App *app);
 static void parse_rest_of_lines(t_App *app, char **str_parsed);
-#include <stdio.h>
+
 void initialize(int argc, char *argv[], t_App *app) {
 
     // initialize
@@ -87,20 +87,19 @@ static bool parse_line(char *line, char **arg1, char **arg2, int *arg3) {
     int dash_idx = mx_get_char_index(line, '-');
     int coma_idx = mx_get_char_index(line, ',');
     int len = mx_strlen(line);
-    // if (dash_idx == -1 
-    //     || coma_idx == -1 
-    //     || len == 0 
-    //     || dash_idx > coma_idx)
-    //     return false;
+
     if (dash_idx == -1) return false;
     if (coma_idx == -1) return false;
     if (len == 0) return false;
     if (dash_idx > coma_idx ) return false;
+    
     *arg1 = mx_strndup(line, dash_idx);
     *arg2 = mx_strndup(line + dash_idx + 1, coma_idx - dash_idx - 1);
     char *number = mx_strndup(line + coma_idx + 1, len - coma_idx - 1);
-    if (!is_valid_name(*arg1) || !is_valid_name(*arg2)) // TODO: не знаю где ошибка
+    
+    if (!is_valid_name(*arg1) || !is_valid_name(*arg2))
         return false;
+    
     *arg3 = my_atoi(number);
     if (*arg3 == -1)
         return false;
@@ -108,7 +107,7 @@ static bool parse_line(char *line, char **arg1, char **arg2, int *arg3) {
     return true;
 }
 
-// initit
+// init
 static void init_city(t_App *app) {
     app->city = malloc(app->SIZE * sizeof (char *) + 1);
     if (app->city == NULL) {

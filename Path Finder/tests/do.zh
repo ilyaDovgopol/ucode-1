@@ -4,6 +4,7 @@ make clean
 make
 cp pathfinder ./tests/pathfinder
 cd ./tests
+
 echo test1 no arguments
 ./pathfinder 2> ./res/res.txt
 diff ./res/tst1.txt ./res/res.txt
@@ -51,3 +52,7 @@ diff ./res/tst11.txt ./res/res.txt
 echo test12 hardest
 ./pathfinder hardest > ./res/res.txt
 diff ./res/tst12.txt ./res/res.txt
+
+echo test13 invalid4
+./pathfinder invalid4 2> ./res/res.txt
+diff ./res/tst13.txt ./res/res.txt

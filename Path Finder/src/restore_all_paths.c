@@ -52,14 +52,14 @@ static int get_from_stack(t_stack *st) {
 
 static bool is_next(t_App *app, t_stack *st, int next) {
     // is cur is matches short path
-    int j = get_from_stack(st);
+    int k = get_from_stack(st);
     int i = st->path[0];
     int *AM = app->AM;
     int *DM = app->dist_M;
     int size = app->SIZE;
 
-    if (j != next) {
-        if (DM[i * size + j] - AM[j * size + next] == DM[i * size + next]) {
+    if (k != next) {
+        if (DM[i * size + k] - AM[k * size + next] == DM[i * size + next]) {
             return true;
         }
     }

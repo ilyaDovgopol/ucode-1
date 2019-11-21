@@ -1,1 +1,1 @@
-error: line 3 isn't valid
+do.zh: 57: do.zh: ./pathfinder: Exec format error

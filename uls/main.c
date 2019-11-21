@@ -12,6 +12,7 @@ void closedir(DIR *dp);
 //struct stat stbuf;
 
 int main(int argc, char *argv[]) {
+    printf("Hello Viktor!\n");
     if (argc == 1)
         fsize(".");
     else {

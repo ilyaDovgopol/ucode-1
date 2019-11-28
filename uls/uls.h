@@ -21,16 +21,16 @@
 #include "libmx.h"
 
 typedef enum e_attr {
-    attr_blocks,
-    attr_chmod,
-    attr_links,
-    attr_user,
-    attr_group,
-    attr_file_size,
-    attr_a_time,
-    attr_m_time,
-    attr_c_time,
-    attr_file_name,
+    blocks,
+    chmod,
+    links,
+    user,
+    group,
+    file_size,
+    a_time,
+    m_time,
+    c_time,
+    file_name,
     MAX_ATTR
 } t_attr;
 
@@ -43,18 +43,16 @@ typedef struct {
 } t_CD;
 
 typedef struct {
-  int something;      // TODO: delete later
+
 } t_Command;
 
 typedef struct {
-    int *al; // attributs for aligning
     int *flags;
     t_Command *command;
     t_CD *cur_dir; // будет с каждой новой дерикторией меняться здесь будут лики
 } t_App;
 
 void read_dir(t_App *app);
-void produce_list_attr(t_App *app);
 
 #endif
 

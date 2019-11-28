@@ -22,8 +22,8 @@
 //     return this;
 // }
 
-int main_application(int argc, char *argv[]) {
-    printf("Arguments: %d %s\n", argc, argv[0]);
+int main(int argc, char *argv[]) {
+    printf("%d %s", argc, argv[0]);
 
     // app = new_app(argc, argv);
     // readargs_parse_fill(app);

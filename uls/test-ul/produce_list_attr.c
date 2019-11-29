@@ -97,9 +97,7 @@ void produce_list_attr(t_App *app) {
     struct dirent *entry;
 	DIR *d = app->cur_dir->current_DIR;
 	while ((entry = readdir(d)) != NULL){
-			mx_push_back(&(app->cur_dir->list_attr), make_attr_array(entry->d_name));
+		mx_push_back(&(app->cur_dir->list_attr), make_attr_array(entry->d_name));
 	}
-    //mx_del_strarr(&listAttr->data);
-	//printf("%lld", sb.st_blocks); // - печатает  Total blocks size
 }
 

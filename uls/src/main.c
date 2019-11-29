@@ -1,6 +1,6 @@
 #include "uls.h"
 
-t_App *new_App(void){
+static t_App *new_App(void){
     t_App *app = malloc(sizeof(t_App));
     app->al = NULL; // attributs for aligning
     app->flags = NULL;
@@ -8,7 +8,7 @@ t_App *new_App(void){
     return app;
 }
 
-int main(int argc, char *argv[]) {
+int main_app(int argc, char *argv[]) {
     printf("Arguments: %d %s\n", argc, argv[0]);
 
     // app = new_app(argc, argv);

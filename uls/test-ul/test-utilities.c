@@ -31,7 +31,7 @@ void make_int_list_of(t_list **head, int size) {
     }
 }
 
-void print_attr_list(void **attr_array) {
+void print_attr_arr(void **attr_array) {
     //attr_array[attr_blocks] = &sb.st_blocks;
 		printf("%lu ", (unsigned long)*((blkcnt_t *)attr_array[attr_blocks]));
     //attr_array[attr_chmod] = eleven_chars_code(sb, name); // -rw-r--r--@ 
@@ -54,5 +54,12 @@ void print_attr_list(void **attr_array) {
 	//attr_array[attr_file_name] = get_name(sb, name); // Makefile
 		printf("%s ", (char *)attr_array[attr_file_name]);
 	printf("\n");
+}
+
+void print_attr_list(t_list *head) {
+    for (t_list *cur = head; cur != NULL; cur = cur->next) {
+        print_attr_arr(cur->data);
+    }
+
 }
 

@@ -8,9 +8,8 @@ static t_App *new_App(void){
     return app;
 }
 
-int main_app(int argc, char *argv[]) {
-    printf("Arguments: %d %s\n", argc, argv[0]);
-
+int main_app() {
+    
     // app = new_app(argc, argv);
     // readargs_parse_fill(app);
     // make_aligned_lines(app);

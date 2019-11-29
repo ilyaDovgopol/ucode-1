@@ -10,7 +10,7 @@ OBJ = $(SRC:.c=.o)
 
 CFLAG = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
-all: clean install clean
+all: install clean
 
 install:
 	@cd libmx && make -f Makefile install
@@ -26,7 +26,7 @@ uninstall:
 
 clean: 
 	@cd libmx && make -f Makefile clean
-	@rm -rf $(SRC) $(HDR)
+	@rm -rf $(SRC) $(HDR) $(OBJ)
 	@rm -rf ./obj
 	@rm libmx.h
 

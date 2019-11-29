@@ -3,7 +3,7 @@
 t_CD *new_CD(t_App *app) {
     t_CD *cd = malloc(sizeof(t_CD ));
     app->cur_dir = cd;
-    cd->list_attr = NULL;//malloc(MAX_ATTR * sizeof(void *));
+    cd->list_attr = NULL;
     // TODO: fill all NULL
     
     return cd;

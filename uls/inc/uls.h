@@ -34,7 +34,7 @@ typedef enum e_attr {
     MAX_ATTR
 } t_attr;
 
-typedef void *t_attr_array[MAX_ATTR];
+//typedef void *t_attr_array[MAX_ATTR];
 
 typedef struct {
     t_list *list_attr;
@@ -42,14 +42,51 @@ typedef struct {
     DIR *current_DIR;
 } t_CD;
 
-typedef struct {
-  int something;      // TODO: delete later
-} t_Command;
+typedef enum {
+    filter_nofilter,
+    filter_removehidden,
+    filter_all_exept_current,
+
+    sort_nosort,
+    sort_size,
+    sort_ctime,
+    sort_atime,
+    sort_mtime,
+
+    format_comma,
+    format_nocomma,
+
+    format_size_noth,
+    format_size_h,
+
+    format_time_full,
+    format_time_short,
+
+    view_l,
+    view_std,
+    view_1,
+
+    header_total,
+    header_dir
+
+} e_Command_State;
+
+typedef enum {
+    cfilter,
+    csort,
+    ccolumns,
+    comma,
+    cformat_size,
+    cformat_time,
+    cview,
+    cheader,
+    MAX_COMMANDS
+} e_Command;
 
 typedef struct {
     int *al; // attributs for aligning
     int *flags;
-    t_Command *command;
+    int *command[MAX_COMMANDS];
     t_CD *cur_dir; // будет с каждой новой дерикторией меняться здесь будут лики
 } t_App;
 

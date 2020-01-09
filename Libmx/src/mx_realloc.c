@@ -11,7 +11,7 @@ void *mx_realloc(void *ptr, size_t size) {
         return malloc(malloc_size(0));
     }
     
-    int sz = my_min(size, malloc_size(ptr));
+    size_t sz = my_min(size, malloc_size(ptr));
     void *p = malloc(size);
     if (p == NULL) return NULL;
  
